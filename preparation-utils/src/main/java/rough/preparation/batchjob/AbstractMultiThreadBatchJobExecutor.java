@@ -27,7 +27,9 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
         int successed = 0;
         int failed = 0;
         StopWatch stopWatch = new StopWatch();
+        // 线程数
         int threads = batchJob.getThreads() > 0 ? batchJob.getThreads() : DEFAULT_THREADS;
+        // 最大同时提交数
         int maxInvokes;
         if (batchJob.getMaxInvokes() == null) {
             maxInvokes = DEFAULT_MAX_INVOKES;
@@ -36,7 +38,8 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
                     ? batchJob.getMaxInvokes().intValue()
                     : DEFAULT_MAX_INVOKES;
         }
-        ExecutorService executorPool = Executors.newFixedThreadPool(threads);
+
+        final ExecutorService executorPool = Executors.newFixedThreadPool(threads);
         logger.info("Created thread pool with threads: " + threads);
 
         try {
