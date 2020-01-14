@@ -11,8 +11,8 @@ public class SimpleMultiThreadBatchJobExecutor
 
     @Override
     protected List<Integer> taskParams(BatchJob batchJob) {
-        List<Integer> results = new ArrayList<Integer>();
-        for (int i = 0; i < 9999; i++) {
+        List<Integer> results = new ArrayList<>();
+        for (int i = 0; i < 999; i++) {
             results.add(i);
         }
         return results;
@@ -20,7 +20,7 @@ public class SimpleMultiThreadBatchJobExecutor
 
     @Override
     protected Boolean doTaskLogic(BatchJob batchJob, Integer t) {
-        if (t.intValue() == 97) {
+        if (t == 97) {
             String message = "97 is not supported, t = " + t;
             logger.error(message);
             throw new TaskException(message);

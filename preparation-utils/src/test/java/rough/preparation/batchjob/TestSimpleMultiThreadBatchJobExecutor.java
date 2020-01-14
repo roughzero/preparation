@@ -4,7 +4,9 @@
 package rough.preparation.batchjob;
 
 import junit.framework.TestCase;
+import lombok.extern.apachecommons.CommonsLog;
 
+@CommonsLog
 public class TestSimpleMultiThreadBatchJobExecutor extends TestCase {
 
     private SimpleMultiThreadBatchJobExecutor executor;
@@ -17,11 +19,17 @@ public class TestSimpleMultiThreadBatchJobExecutor extends TestCase {
 
     public void testExecute() {
         BatchJob batchJob = new BatchJob();
-        batchJob.setThreads(4);
+        batchJob.setThreads(1);
         long current = System.currentTimeMillis();
-        System.out.println("Start test.....");
+        log.info("Start test.....");
         executor.execute(batchJob);
-        System.out.println("End test, cost " + (System.currentTimeMillis() - current));
+        log.info("End test, cost " + (System.currentTimeMillis() - current));
+
+        batchJob.setThreads(4);
+        current = System.currentTimeMillis();
+        log.info("Start test.....");
+        executor.execute(batchJob);
+        log.info("End test, cost " + (System.currentTimeMillis() - current));
     }
 
 }
