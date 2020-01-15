@@ -50,29 +50,30 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
         info.append(".");
         logger.info(info);
 
+        StopWatch taskWatch = new StopWatch();
+        taskWatch.start();
         if (threads == 1) {
             // 单线程直接执行
             logger.info("Single thread, direct execute.");
-            StopWatch taskWatch = new StopWatch();
-            taskWatch.start();
+            int time = 0;
             for (TaskParam taskParam : taskParams) {
                 try {
                     doTask(batchJob, taskParam);
                     successed++;
                 } catch (Throwable e) {
                     failed++;
-                    if (!(e instanceof BatchJobException)) {
+                    if (!(e instanceof RuntimeException)) {
                         logger.error(e, e);
                     }
                 } finally {
                     executed++;
                     if (executed % maxInvokes == 0) {
-                        int time = executed / maxInvokes;
                         // 每个批次执行完成后输出日志
-                        logTaskExecutionInfo(taskWatch, time, taskParams, successed, failed);
+                        taskWatch = logTaskExecutionInfo(taskWatch, ++time, taskParams, successed, failed);
                     }
                 }
             }
+            logTaskExecutionInfo(taskWatch, ++time, taskParams, successed, failed);
         } else {
             // 多线程使用线程池执行，考虑到批处理处理的单一性，使用 Executors.newFixedThreadPool(threads) 取得。
             // Create thread pool.
@@ -86,8 +87,6 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
                     times++;
                 }
                 for (int time = 0; time < times; time++) {
-                    StopWatch taskWatch = new StopWatch();
-                    taskWatch.start();
                     List<Callable<TaskResult>> tasks = createTasks(batchJob, taskParams, time,
                             maxInvokes);
                     try {
@@ -99,7 +98,7 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
                             } catch (ExecutionException e) {
                                 // 如果是可控的异常则不记录，由实现程序记录。
                                 failed++;
-                                if (!(e.getCause() instanceof BatchJobException)) {
+                                if (!(e.getCause() instanceof RuntimeException)) {
                                     logger.error(e, e);
                                 }
                             } catch (Throwable e) {
@@ -111,7 +110,7 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
                         logger.warn(e, e);
                     }
                     // 每个批次执行完成后输出日志
-                    logTaskExecutionInfo(taskWatch, time + 1, taskParams, successed, failed);
+                    taskWatch = logTaskExecutionInfo(taskWatch, time + 1, taskParams, successed, failed);
                 }
             } finally {
                 executorPool.shutdown(); // close resources.
@@ -139,8 +138,9 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
      * @param taskParams 任务列表
      * @param successed  成功数
      * @param failed     失败数
+     * @return StopWatch
      */
-    private void logTaskExecutionInfo(StopWatch taskWatch, int time, List<TaskParam> taskParams, int successed, int failed) {
+    private StopWatch logTaskExecutionInfo(StopWatch taskWatch, int time, List<TaskParam> taskParams, int successed, int failed) {
         // 每个批次执行完成后输出日志
         taskWatch.stop();
         StringBuilder message = new StringBuilder();
@@ -150,6 +150,9 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
         message.append(", cost: ").append(taskWatch.getTime()).append(" milliseconds");
         message.append(".");
         logger.info(message);
+        taskWatch = new StopWatch();
+        taskWatch.start();
+        return taskWatch;
     }
 
     /**
@@ -188,11 +191,15 @@ public abstract class AbstractMultiThreadBatchJobExecutor<TaskParam, TaskResult>
         } catch (Throwable e) {
             String message = "Catch exception when run task: " + taskParam;
             logger.error(message);
-            logger.error(e, e);
             if (e instanceof BatchJobException) {
                 throw (BatchJobException) e;
             } else {
-                throw new RuntimeException(message);
+                logger.error(e, e);
+                if (e instanceof RuntimeException) {
+                    throw e;
+                } else {
+                    throw new RuntimeException(message);
+                }
             }
         }
     }

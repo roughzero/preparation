@@ -6,6 +6,8 @@ package rough.preparation.batchjob;
 import junit.framework.TestCase;
 import lombok.extern.apachecommons.CommonsLog;
 
+import java.math.BigDecimal;
+
 @CommonsLog
 public class TestSimpleMultiThreadBatchJobExecutor extends TestCase {
 
@@ -20,6 +22,7 @@ public class TestSimpleMultiThreadBatchJobExecutor extends TestCase {
     public void testExecute() {
         BatchJob batchJob = new BatchJob();
         batchJob.setThreads(1);
+        batchJob.setMaxInvokes(new BigDecimal(100));
         long current = System.currentTimeMillis();
         log.info("Start test.....");
         executor.execute(batchJob);
