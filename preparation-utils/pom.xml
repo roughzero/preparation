@@ -5,7 +5,7 @@
 
     <groupId>rough.preparation</groupId>
     <artifactId>preparation-utils</artifactId>
-    <version>0.6.1</version>
+    <version>0.6.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>preparation-utils</name>
