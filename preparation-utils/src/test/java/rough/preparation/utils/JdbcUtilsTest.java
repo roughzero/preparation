@@ -1,7 +1,6 @@
 package rough.preparation.utils;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
 import junit.framework.TestCase;
