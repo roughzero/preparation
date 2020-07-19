@@ -14,8 +14,8 @@ public class ObjectMatcherTest {
         CodeMatcher codeMatcher = new CodeMatcher(YearMatcher.class);
         StopWatch watch = new StopWatch();
         watch.start();
-        for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
                 TestResultObject testResultObject = new TestResultObject(Integer.toString(i), Integer.toString(j), Integer.toString(i * j));
                 codeMatcher.put(testResultObject);
             }
@@ -25,8 +25,8 @@ public class ObjectMatcherTest {
         // 检查查询 10000 次的效率
         watch.reset();
         watch.start();
-        for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++) {
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
                 TestQueryObject queryObject = new TestQueryObject(i + "," + j, Integer.toString(i), Integer.toString(j));
                 TestResultObject resultObject = codeMatcher.get(queryObject);
                 if (resultObject == null) {
