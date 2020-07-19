@@ -5,6 +5,16 @@ public class TestQueryObject {
     String code;
     String year;
 
+    public TestQueryObject(String name, String code, String year) {
+        this.name = name;
+        this.code = code;
+        this.year = year;
+    }
+
+    public TestQueryObject() {
+
+    }
+
     public String getName() {
         return name;
     }

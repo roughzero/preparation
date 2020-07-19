@@ -95,7 +95,7 @@ public abstract class AbstractObjectMatcher<QueryObject, Result> implements Obje
             return getFromCache(keyOfCache);
         } else {
             ObjectMatcher<QueryObject, Result> childMather;
-            if (cache.containsKey(queryObject)) {
+            if (cache.containsKey(keyOfCache)) {
                 childMather = (ObjectMatcher<QueryObject, Result>) cache.get(keyOfCache);
                 return childMather.get(queryObject);
             } else {
