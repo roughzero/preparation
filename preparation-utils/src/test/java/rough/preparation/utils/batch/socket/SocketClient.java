@@ -19,8 +19,8 @@ import org.apache.commons.logging.LogFactory;
 public class SocketClient implements Runnable {
     protected static Log logger = LogFactory.getLog(SocketClient.class);
 
-    private int start;
-    private int times;
+    private final int start;
+    private final int times;
 
     private static Integer finished = 0;
     private static long finishedTime = 0;

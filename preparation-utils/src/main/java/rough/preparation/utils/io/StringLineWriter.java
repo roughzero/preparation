@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author rough
  */
 public class StringLineWriter extends AbstractLineWriter implements LineWriter {
-    private StringBuffer result;
+    private final StringBuffer result;
 
     /**
      * Constructor.
@@ -24,6 +24,7 @@ public class StringLineWriter extends AbstractLineWriter implements LineWriter {
     /**
      * @see rough.preparation.utils.io.LineWriter#write(java.lang.String)
      */
+    @SuppressWarnings("RedundantThrows")
     public void write(String line) throws IOException {
         result.append(line);
     }

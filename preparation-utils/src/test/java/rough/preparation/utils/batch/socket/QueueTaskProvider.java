@@ -8,7 +8,7 @@ import java.util.Queue;
 import rough.preparation.batch.MultiThreadTaskProvider;
 
 public class QueueTaskProvider implements MultiThreadTaskProvider<SocketWrapper> {
-    private Queue<SocketWrapper> queue;
+    private final Queue<SocketWrapper> queue;
     int providedTasks = 0;
 
     public QueueTaskProvider(Queue<SocketWrapper> queue) {

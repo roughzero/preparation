@@ -19,8 +19,8 @@ import java.io.IOException;
  * @author rough
  */
 public class TextFileReader {
-    private TextFileLineReader reader;
-    private StringLineWriter writer;
+    private final TextFileLineReader reader;
+    private final StringLineWriter writer;
     private static final String DEFAULT_CHARSET = "UTF-8";
 
     private String lineSeparator;

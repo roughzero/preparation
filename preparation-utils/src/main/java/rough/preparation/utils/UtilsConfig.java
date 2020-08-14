@@ -8,20 +8,20 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * 配置管理工具.
- * 
+ * <p>
  * 尚需完善. 目前为从配置文件中取得信息缓存之.
  * 配置文件的取得顺序为先从 CLASS_PATH 中取得, 若没有, 则从文件中取.
- * 
+ *
  * @author rough
  */
 public class UtilsConfig {
-    protected static Log logger = LogFactory.getLog(UtilsConfig.class);
+    protected static final Log logger = LogFactory.getLog(UtilsConfig.class);
 
-    private static final String[] CONFIG_NAMES = { "utils.properties" };
-    private static Properties config = new Properties();
+    private static final String[] CONFIG_NAMES = {"utils.properties"};
+    private static final Properties config = new Properties();
 
     static {
-        init(CONFIG_NAMES);
+        init();
     }
 
     private static Properties loadFromFile(String fileName) {
@@ -44,8 +44,8 @@ public class UtilsConfig {
         return result;
     }
 
-    private static void init(String[] names) {
-        for (String name : names) {
+    private static void init() {
+        for (String name : UtilsConfig.CONFIG_NAMES) {
             Properties properties = loadFormClassPath(name);
             if (properties.keySet().isEmpty()) {
                 properties = loadFromFile(name);
@@ -56,6 +56,7 @@ public class UtilsConfig {
 
     /**
      * 取得 String 类型的配置信息
+     *
      * @param key 配置 key
      * @return 配置值
      */

@@ -15,7 +15,7 @@ public class ListTaskProvider<E> extends AbstractTaskProvider<E> {
 
     private int next;
 
-    private List<E> tasks;
+    private final List<E> tasks;
 
     /**
      * Constructor.

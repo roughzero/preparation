@@ -13,23 +13,21 @@ public class SocketServerByExecutorServiceMain {
     private static final int PORT = 10086;
     private static final int THREADS = 2;
 
-    private static boolean isStopping = false;
-
     private static ServerSocket serverSocket = null;
     private static ExecutorService executorService = null;
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) throws IOException {
         init();
 
-        while (!isStopping) {
+        while (true) {
             Socket socket = serverSocket.accept();
 
             executorService.execute(new SocketTaskRunnable(socket));
         }
-
-        close();
     }
 
+    @SuppressWarnings("unused")
     public static ExecutorService executorService() {
         return executorService;
     }
@@ -41,8 +39,9 @@ public class SocketServerByExecutorServiceMain {
 
     /**
      * 关闭所有资源
-     * @throws IOException 
+     * @throws IOException When catch IOException.
      */
+    @SuppressWarnings("unused")
     private static void close() throws IOException {
         executorService.shutdown();
         serverSocket.close();

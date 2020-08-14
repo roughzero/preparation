@@ -31,7 +31,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
     /** 在参数中传入的线程数 Key 值 */
     public static final String KEY_COUNT_OF_THREADS = MultiThreadBatchRunner.class.getSimpleName() + ".countOfThreads";
 
-    protected Log logger = LogFactory.getLog(getClass());
+    protected final Log logger = LogFactory.getLog(getClass());
 
     private int status = STATUS_STOPPED;
 
@@ -46,7 +46,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
     private MultiThreadTaskProvider<Task> taskProvider = null;
 
     /** 线程池, 保存正在运行的线程 */
-    private Map<MultiThreadTaskHandler<Task, Result>, Thread> runnerMap = new HashMap<MultiThreadTaskHandler<Task, Result>, Thread>();
+    private final Map<MultiThreadTaskHandler<Task, Result>, Thread> runnerMap = new HashMap<>();
 
     private Date started = null;
 
@@ -97,14 +97,14 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
         String s = parameter.get(KEY_COUNT_OF_THREADS);
         if (StringUtils.isEmpty(s))
             return DEFAULT_THREADS;
-        int threads = DEFAULT_THREADS;
+        int threads;
         try {
-            threads = Integer.valueOf(s);
+            threads = Integer.parseInt(s);
         } catch (Exception e) {
             return DEFAULT_THREADS;
         }
-        threads = threads < MIN_THREADS ? MIN_THREADS : threads;
-        threads = threads > MAX_THREADS ? MAX_THREADS : threads;
+        threads = Math.max(threads, MIN_THREADS);
+        threads = Math.min(threads, MAX_THREADS);
         return threads;
     }
 
@@ -234,6 +234,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
      * 开始单个任务的回调.
      * @param task task object.
      */
+    @SuppressWarnings("EmptyMethod")
     public synchronized void doBeforeTask(Task task) {
     }
 

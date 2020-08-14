@@ -11,7 +11,7 @@ import rough.preparation.batch.MultiThreadTaskHandler;
 import rough.preparation.batch.MultiThreadTaskProvider;
 
 public class SocketTaskRunner extends MultiThreadBatchRunner<SocketWrapper, Boolean> {
-    private MultiThreadTaskProvider<SocketWrapper> provider;
+    private final MultiThreadTaskProvider<SocketWrapper> provider;
 
     public SocketTaskRunner(Queue<SocketWrapper> queue) {
         this.provider = new QueueTaskProvider(queue);

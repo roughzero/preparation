@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class SocketWrapper {
 
-    private Date createTime;
-    private Socket socket;
+    private final Date createTime;
+    private final Socket socket;
 
     public SocketWrapper(Socket socket) {
         this.createTime = new Date();

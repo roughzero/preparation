@@ -74,7 +74,7 @@ public class StepTaskProvider extends AbstractTaskProvider<Integer> {
             int result = current;
             current += step;
             proviedTasks++;
-            return new Integer(result);
+            return result;
         }
 
         return null;
