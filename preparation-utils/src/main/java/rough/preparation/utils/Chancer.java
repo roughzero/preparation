@@ -6,9 +6,9 @@ package rough.preparation.utils;
 import java.util.Random;
 
 public class Chancer {
-    private Random random;
-    private int chance;
-    private int total;
+    private final Random random;
+    private final int chance;
+    private final int total;
 
     public Chancer(int chance, int total) {
         this.chance = chance;

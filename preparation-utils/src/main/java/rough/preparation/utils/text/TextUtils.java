@@ -7,11 +7,11 @@ import org.apache.commons.lang.StringUtils;
 
 public final class TextUtils {
 
-    public static final String toCamel(String s, boolean isFirstUpCase, String delimiter) {
+    public static String toCamel(String s, boolean isFirstUpCase, String delimiter) {
         if (StringUtils.isEmpty(s))
             return StringUtils.EMPTY;
         String[] subs = StringUtils.split(s, delimiter);
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         if (isFirstUpCase)
             result.append(StringUtils.capitalize(subs[0].toLowerCase()));
         else
@@ -23,7 +23,7 @@ public final class TextUtils {
         return result.toString();
     }
 
-    public static final String getSuffix(String filename) {
+    public static String getSuffix(String filename) {
         if (filename == null)
             return "";
         else {

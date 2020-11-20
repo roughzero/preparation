@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
  * @author rough
  */
 public abstract class MultiThreadTaskHandler<Task, Result> implements Runnable {
-    protected static Log logger = LogFactory.getLog(MultiThreadTaskHandler.class);
+    protected static final Log logger = LogFactory.getLog(MultiThreadTaskHandler.class);
     /** 批处理运行器 */
     protected MultiThreadBatchRunner<Task, Result> batchRunner;
 
@@ -96,6 +96,7 @@ public abstract class MultiThreadTaskHandler<Task, Result> implements Runnable {
     /**
      * 初始设置.
      */
+    @SuppressWarnings("EmptyMethod")
     protected void setup() {
     }
 

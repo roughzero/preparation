@@ -21,7 +21,7 @@ public class SleepBatchRunnerTest {
 
     private static final String COMMAND_FILE = "batch.command";
 
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         SleepBatchRunner batchRunner = new SleepBatchRunner();
         batchRunner.setDebugCount(10);
         Map<String, String> parameter = new HashMap<String, String>();

@@ -4,5 +4,5 @@
 package rough.preparation.utils.io;
 
 public interface LineDecorater {
-    public String decorate(String line);
+    String decorate(String line);
 }

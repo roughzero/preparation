@@ -17,9 +17,7 @@ public class SocketServerMain {
     private static final int PORT = 10086;
     private static final int THREADS = 2;
 
-    private static boolean isStopping = false;
-
-    private static Queue<SocketWrapper> taskQueue = new ConcurrentLinkedQueue<SocketWrapper>();
+    private static final Queue<SocketWrapper> taskQueue = new ConcurrentLinkedQueue<SocketWrapper>();
 
     private static ServerSocket serverSocket = null;
 
@@ -32,6 +30,7 @@ public class SocketServerMain {
         params.put(MultiThreadBatchRunner.KEY_COUNT_OF_THREADS, Integer.toString(THREADS));
         socketTaskRunner.run(params);
 
+        boolean isStopping = false;
         while (!isStopping) {
             Socket socket = serverSocket.accept();
 

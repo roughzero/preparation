@@ -8,12 +8,12 @@ import java.util.Map;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class AbstractObjectMatcher<QueryObject, Result> implements ObjectMatcher<QueryObject, Result> {
-    protected static Log logger = LogFactory.getLog(AbstractObjectMatcher.class);
+    protected static final Log logger = LogFactory.getLog(AbstractObjectMatcher.class);
 
-    protected Map<Object, Object> cache = new HashMap<>();
+    protected final Map<Object, Object> cache = new HashMap<>();
 
     /** 子匹配器，若为空则直接缓存结果，否则使用子匹配器的实例缓存结果 */
-    Class<AbstractObjectMatcher<QueryObject, Result>> childMatcherPrototype;
+    final Class<AbstractObjectMatcher<QueryObject, Result>> childMatcherPrototype;
 
     /**
      * 根据返回结果来决定进行匹配的字段值，缓存时使用

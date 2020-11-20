@@ -18,8 +18,8 @@ import org.apache.commons.logging.LogFactory;
 public class SocketTaskRunnable implements Runnable {
     protected Log logger = LogFactory.getLog(getClass());
 
-    private Date createTime;
-    private Socket socket;
+    private final Date createTime;
+    private final Socket socket;
 
     public SocketTaskRunnable(Socket socket) {
         this.createTime = new Date(System.currentTimeMillis());

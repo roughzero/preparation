@@ -11,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public final class JdbcUtils {
-    private static Log logger = LogFactory.getLog(JdbcUtils.class);
+    private static final Log logger = LogFactory.getLog(JdbcUtils.class);
 
     public static final String JDBC_DRIVER = UtilsConfig.getString("JdbcUtils.JDBC_DRIVER");
     public static final String JDBC_URL = UtilsConfig.getString("JdbcUtils.JDBC_URL");
@@ -27,9 +27,7 @@ public final class JdbcUtils {
             String password) throws Exception {
         Class.forName(driver);
 
-        Connection result = DriverManager.getConnection(url, userName, password);
-
-        return result;
+        return DriverManager.getConnection(url, userName, password);
     }
 
     public static void closeResultSetSilently(ResultSet rs) {

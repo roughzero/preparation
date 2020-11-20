@@ -16,7 +16,7 @@ public abstract class AbstractRateListCache<BusiObject, Rate, Key>
         implements RateListCache<BusiObject, Rate, Key> {
 
     /** 本级缓存 */
-    protected Map<Key, Object> cache = new HashMap<>();
+    protected final Map<Key, Object> cache = new HashMap<>();
 
     /** 使用使用子匹配器 */
     protected abstract boolean isUsingChildMatcher();

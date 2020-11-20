@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TextFileConverter {
-    private TextFileLineReader reader;
-    private TextFileLineWriter writer;
+    private final TextFileLineReader reader;
+    private final TextFileLineWriter writer;
 
     public TextFileConverter(String source, String sourceCharset, String target, String targetCharset)
             throws FileNotFoundException {

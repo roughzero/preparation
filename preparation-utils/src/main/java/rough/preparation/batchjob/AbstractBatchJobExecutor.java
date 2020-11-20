@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 public abstract class AbstractBatchJobExecutor implements BatchJobExecutor {
 
-    protected static Log logger = LogFactory.getLog(AbstractBatchJobExecutor.class);
+    protected static final Log logger = LogFactory.getLog(AbstractBatchJobExecutor.class);
 
     /**
      * 将存储成字符串形式参数转换成形式，字符串参数的格式为：PARAM1_NAME=PARAM1_VALUE;PARAM2_NAME=PARAM2_VALUE
@@ -20,7 +20,7 @@ public abstract class AbstractBatchJobExecutor implements BatchJobExecutor {
      * @return 以Map形式保存的参数
      */
     protected static Map<String, String> transferParams(String batchParams) {
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<>();
 
         try {
             String[] params = StringUtils.split(batchParams, ";");

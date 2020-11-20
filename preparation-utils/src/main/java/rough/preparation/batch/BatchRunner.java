@@ -13,11 +13,11 @@ import java.util.Map;
  */
 public interface BatchRunner {
 
-    public static final int STATUS_STOPPED = 0;
-    public static final int STATUS_STARTING = 1;
-    public static final int STATUS_STARTED = 2;
-    public static final int STATUS_PAUSING = 3;
-    public static final int STATUS_STOPPING = 4;
+    int STATUS_STOPPED = 0;
+    int STATUS_STARTING = 1;
+    int STATUS_STARTED = 2;
+    int STATUS_PAUSING = 3;
+    int STATUS_STOPPING = 4;
 
     /**
      * 运行批处理

@@ -20,13 +20,9 @@ import java.io.RandomAccessFile;
 public class TextFileLineReader implements LineReader {
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final String READED_CHARSET = "ISO-8859-1";
-    private static final LineDecorater DEFAULT_DECORATER = new LineDecorater() {
-        public String decorate(String line) {
-            return line;
-        }
-    };
+    private static final LineDecorater DEFAULT_DECORATER = line -> line;
 
-    private RandomAccessFile access;
+    private final RandomAccessFile access;
     private String charset;
     private boolean hasBom;
     private LineDecorater decorater;

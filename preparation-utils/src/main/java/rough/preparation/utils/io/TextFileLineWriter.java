@@ -12,17 +12,17 @@ import java.io.RandomAccessFile;
  * 写入对象为文本文件的 LineWriter 实现类.
  * 默认字符集为"UTF-8", 不带 BOM 信息.
  * 注意每次写入之前会删除原有的文件.
- * 
+ *
  * @author rough
  */
 public class TextFileLineWriter extends AbstractLineWriter implements LineWriter {
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final boolean DEFAULT_HAS_BOM = false;
-    private String charset;
+    private final String charset;
 
     private boolean hasBom;
     private boolean isFirstLine;
-    private RandomAccessFile access;
+    private final RandomAccessFile access;
 
     public boolean isHasBom() {
         return hasBom;
@@ -34,7 +34,7 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
 
     /**
      * Constructor.
-     * 
+     *
      * @param filename 文件名.
      * @throws FileNotFoundException FileNotFoundException
      */
@@ -44,9 +44,9 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
 
     /**
      * Constructor.
-     * 
+     *
      * @param filename 文件名
-     * @param charset 字符集
+     * @param charset  字符集
      * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineWriter(String filename, String charset) throws FileNotFoundException {
@@ -55,7 +55,7 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
 
     /**
      * Constructor.
-     * 
+     *
      * @param file 文件
      * @throws FileNotFoundException FileNotFoundException
      */
@@ -65,12 +65,16 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
 
     /**
      * Constructor.
-     * 
-     * @param file 文件
+     *
+     * @param file    文件
      * @param charset 字符集
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException If file does not exists.
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public TextFileLineWriter(File file, String charset) throws FileNotFoundException {
+        if (file == null) {
+            throw new FileNotFoundException("File can not be null.");
+        }
         this.charset = charset;
         if (file.exists())
             file.delete();
@@ -92,12 +96,13 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
 
     /**
      * 写入文件的 BOM 信息.
-     * @throws IOException
+     *
+     * @throws IOException While catch IOException.
      */
     private void writeBom() throws IOException {
         if (hasBom) {
             if (this.charset.toUpperCase().equals("UTF-8")) {
-                access.write(new byte[] { (byte) 239, (byte) 187, (byte) 191 });
+                access.write(new byte[]{(byte) 239, (byte) 187, (byte) 191});
             }
         }
     }
