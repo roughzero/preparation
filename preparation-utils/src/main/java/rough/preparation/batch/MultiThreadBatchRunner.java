@@ -13,22 +13,33 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * 多线程批处理运行器实现基类.
- * 
+ * <p>
  * TODO 使用方法
+ *
  * @author rough
  */
 public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunner {
 
-    /** 默认线程数 */
+    /**
+     * 默认线程数
+     */
     private static final int DEFAULT_THREADS = 1;
-    /** 最小线程数 */
+    /**
+     * 最小线程数
+     */
     private static final int MIN_THREADS = 1;
-    /** 最大线程数 */
+    /**
+     * 最大线程数
+     */
     private static final int MAX_THREADS = 10;
-    /** 默认输出运行信息的任务间隔数 */
+    /**
+     * 默认输出运行信息的任务间隔数
+     */
     private static final int DEFAULT_DEBUG_COUNT = 1000;
 
-    /** 在参数中传入的线程数 Key 值 */
+    /**
+     * 在参数中传入的线程数 Key 值
+     */
     public static final String KEY_COUNT_OF_THREADS = MultiThreadBatchRunner.class.getSimpleName() + ".countOfThreads";
 
     protected final Log logger = LogFactory.getLog(getClass());
@@ -42,10 +53,14 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
         return this.status;
     }
 
-    /** 任务分发器, 实现任务的分发 */
+    /**
+     * 任务分发器, 实现任务的分发
+     */
     private MultiThreadTaskProvider<Task> taskProvider = null;
 
-    /** 线程池, 保存正在运行的线程 */
+    /**
+     * 线程池, 保存正在运行的线程
+     */
     private final Map<MultiThreadTaskHandler<Task, Result>, Thread> runnerMap = new HashMap<>();
 
     private Date started = null;
@@ -66,10 +81,14 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
         return finished;
     }
 
-    /** 本次执行使用的最大线程数 */
+    /**
+     * 本次执行使用的最大线程数
+     */
     protected int maxThreads = 0;
 
-    /** 输出运行信息的任务间隔数 */
+    /**
+     * 输出运行信息的任务间隔数
+     */
     private int debugCount = DEFAULT_DEBUG_COUNT;
 
     public int getDebugCount() {
@@ -89,6 +108,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
 
     /**
      * 根据参数取得线程运行数.
+     *
      * @param parameter 执行参数.
      * @return 线程运行数.
      * @see #KEY_COUNT_OF_THREADS
@@ -126,13 +146,14 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
         int threads = getCountOfThreads(parameter);
 
         for (int i = 0; i < threads; i++) {
-            this.addThread(taskRunner(parameter));
+            this.addThread(createHadnelr(parameter));
         }
     }
 
     /**
      * Publish next task for thread to run, null if all task is finished.
      * 发布下一个任务供线程执行, 若所有任务已完成则返回空.
+     *
      * @return next task. Null if all task is finished.
      */
     public synchronized Task nextTask() {
@@ -151,6 +172,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
 
     /**
      * 增加一个线程.
+     *
      * @param handler task handler.
      */
     public synchronized void addThread(MultiThreadTaskHandler<Task, Result> handler) {
@@ -178,6 +200,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
 
     /**
      * 移去一个线程.
+     *
      * @param runner task runner.
      */
     public synchronized void removeThread(MultiThreadTaskHandler<Task, Result> runner) {
@@ -209,6 +232,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
 
     /**
      * 根据参数取得任务分发器.
+     *
      * @param parameter 运行参数.
      * @return 任务分发器.
      */
@@ -216,10 +240,25 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
 
     /**
      * 根据参数取得任务处理器.
+     *
      * @param parameter 运行参数.
      * @return 任务处理器.
      */
     protected abstract MultiThreadTaskHandler<Task, Result> taskRunner(Map<String, String> parameter);
+
+    /**
+     * 根据参数取得任务处理器.
+     * 2020-12-13 Rough added. 为了保证实现类产生 Handler 后调用设置 Runner 的方法.
+     *
+     * @param parameter 运行参数.
+     * @return 任务处理器.
+     * @since 0.6.2
+     */
+    private MultiThreadTaskHandler<Task, Result> createHadnelr(Map<String, String> parameter) {
+        MultiThreadTaskHandler<Task, Result> handler = taskRunner(parameter);
+        handler.setBatchRunner(this);
+        return handler;
+    }
 
     /**
      * 第一个线程开始启动前的处理.
@@ -232,6 +271,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
     /**
      * Callback for start single task.
      * 开始单个任务的回调.
+     *
      * @param task task object.
      */
     @SuppressWarnings("EmptyMethod")
@@ -241,7 +281,8 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
     /**
      * Callback for finish single task.
      * 完成单个任务的回调.
-     * @param task task object.
+     *
+     * @param task   task object.
      * @param result result of task.
      */
     public synchronized void doAfterTask(Task task, Result result) {
@@ -251,6 +292,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
     /**
      * Callback for finish thread Job.
      * 完成所有任务后线程结束前的回调.
+     *
      * @param runner task runner.
      */
     public synchronized void doAfterProcess(MultiThreadTaskHandler<Task, Result> runner) {
