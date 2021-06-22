@@ -41,7 +41,7 @@ public final class FileUtils {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static File write(@NotNull byte[] data, @NotNull File file) throws IOException {
+    public static File write(byte[] data, @NotNull File file) throws IOException {
         if (data.length > getMaxSizeOfFile()) {
             log.error("Data length too long: " + data.length);
             throw new IOException("Data length too long: " + data.length);
@@ -56,7 +56,7 @@ public final class FileUtils {
         return file;
     }
 
-    public static File write(@NotNull byte[] data, @NotNull String fileName) throws IOException {
+    public static File write(byte[] data, @NotNull String fileName) throws IOException {
         return write(data, new File(fileName));
     }
 }

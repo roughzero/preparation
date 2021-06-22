@@ -101,7 +101,7 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
      */
     private void writeBom() throws IOException {
         if (hasBom) {
-            if (this.charset.toUpperCase().equals("UTF-8")) {
+            if (this.charset.equalsIgnoreCase("UTF-8")) {
                 access.write(new byte[]{(byte) 239, (byte) 187, (byte) 191});
             }
         }
