@@ -75,9 +75,9 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
     private int finished = 0;
 
     /**
-     * @see rough.preparation.batch.BatchRunner#getFininshed()
+     * @see rough.preparation.batch.BatchRunner#getFinished()
      */
-    public int getFininshed() {
+    public int getFinished() {
         return finished;
     }
 
@@ -146,7 +146,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
         int threads = getCountOfThreads(parameter);
 
         for (int i = 0; i < threads; i++) {
-            this.addThread(createHadnelr(parameter));
+            this.addThread(createHandler(parameter));
         }
     }
 
@@ -254,7 +254,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
      * @return 任务处理器.
      * @since 0.6.2
      */
-    private MultiThreadTaskHandler<Task, Result> createHadnelr(Map<String, String> parameter) {
+    private MultiThreadTaskHandler<Task, Result> createHandler(Map<String, String> parameter) {
         MultiThreadTaskHandler<Task, Result> handler = taskRunner(parameter);
         handler.setBatchRunner(this);
         return handler;
@@ -274,8 +274,8 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
      *
      * @param task task object.
      */
-    @SuppressWarnings("EmptyMethod")
     public synchronized void doBeforeTask(Task task) {
+        logger.debug("Prepare to process task: " + task + ".");
     }
 
     /**
@@ -286,6 +286,7 @@ public abstract class MultiThreadBatchRunner<Task, Result> implements BatchRunne
      * @param result result of task.
      */
     public synchronized void doAfterTask(Task task, Result result) {
+        logger.debug("Finish task: " + task + ", result: " + result + ".");
         finished++;
     }
 

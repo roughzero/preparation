@@ -21,7 +21,7 @@ public class SleepBatchRunner extends MultiThreadBatchRunner<Integer, Object> {
     protected MultiThreadTaskHandler<Integer, Object> taskRunner(Map<String, String> parameter) {
         return new MultiThreadTaskHandler<Integer, Object>() {
             @Override
-            protected Object doProcee(Integer taskObj) {
+            protected Object doProcess(Integer taskObj) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

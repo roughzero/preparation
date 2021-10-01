@@ -62,7 +62,7 @@ public abstract class MultiThreadTaskHandler<Task, Result> implements Runnable {
                 Result result = null;
 
                 try {
-                    result = doProcee(task);
+                    result = doProcess(task);
                 } catch (RuntimeException e) {
                     logger.error("Get RuntimeException when process task.", e);
                 } finally {
@@ -82,7 +82,7 @@ public abstract class MultiThreadTaskHandler<Task, Result> implements Runnable {
      * @param task 任务对象.
      * @return 执行结果.
      */
-    protected abstract Result doProcee(Task task);
+    protected abstract Result doProcess(Task task);
 
     /**
      * 取得下一个任务.

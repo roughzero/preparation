@@ -37,7 +37,7 @@ public class SleepBatchRunnerTest {
                 batchRunner.stop();
                 break;
             }
-            if (batchRunner.getFininshed() >= 1000)
+            if (batchRunner.getFinished() >= 1000)
                 break;
             Thread.sleep(1000);
         }

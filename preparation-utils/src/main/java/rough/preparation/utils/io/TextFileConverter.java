@@ -16,8 +16,8 @@ public class TextFileConverter {
         this.writer = new TextFileLineWriter(target, targetCharset);
     }
 
-    public void setDecorater(LineDecorater decorater) {
-        reader.setDecorater(decorater);
+    public void setDecorator(LineDecorator decorator) {
+        reader.setDecorator(decorator);
     }
 
     public void setLineSeparator(String lineSeparator) {

@@ -25,8 +25,8 @@ public class TextFileReader {
 
     private String lineSeparator;
 
-    public void setDecorater(LineDecorater decorater) {
-        reader.setDecorater(decorater);
+    public void setDecorater(LineDecorator decorater) {
+        reader.setDecorator(decorater);
     }
 
     public String getLineSeparator() {

@@ -19,28 +19,27 @@ import java.io.RandomAccessFile;
  */
 public class TextFileLineReader implements LineReader {
     private static final String DEFAULT_CHARSET = "UTF-8";
-    private static final String READED_CHARSET = "ISO-8859-1";
-    private static final LineDecorater DEFAULT_DECORATER = line -> line;
+    private static final String HAVE_READ_CHARSET = "ISO-8859-1";
+    private static final LineDecorator DEFAULT_DECORATOR = line -> line;
 
     private final RandomAccessFile access;
     private String charset;
     private boolean hasBom;
-    private LineDecorater decorater;
+    private LineDecorator decorator;
     private boolean isFirstLine;
 
-    public LineDecorater getDecorater() {
-        return decorater;
+    public LineDecorator getDecorator() {
+        return decorator;
     }
 
-    public void setDecorater(LineDecorater decorater) {
-        this.decorater = decorater;
+    public void setDecorator(LineDecorator decorator) {
+        this.decorator = decorator;
     }
 
     /**
      * Constructor.
      * 
      * @param filename 文件名
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineReader(String filename) throws FileNotFoundException {
         this(filename, DEFAULT_CHARSET);
@@ -51,7 +50,6 @@ public class TextFileLineReader implements LineReader {
      * 
      * @param fileName 文件名
      * @param charset 字符集
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineReader(String fileName, String charset) throws FileNotFoundException {
         this(fileName != null ? new File(fileName) : null, charset);
@@ -61,7 +59,6 @@ public class TextFileLineReader implements LineReader {
      * Constructor.
      * 
      * @param file 文件
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineReader(File file) throws FileNotFoundException {
         this(file, DEFAULT_CHARSET);
@@ -72,13 +69,12 @@ public class TextFileLineReader implements LineReader {
      * 
      * @param file 文件
      * @param charset 字符集
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineReader(File file, String charset) throws FileNotFoundException {
         this.charset = charset;
         this.access = new RandomAccessFile(file, "r");
         this.hasBom = false;
-        this.decorater = DEFAULT_DECORATER;
+        setDecorator(DEFAULT_DECORATOR);
         isFirstLine = true;
     }
 
@@ -92,8 +88,8 @@ public class TextFileLineReader implements LineReader {
                 line = checkBom(line);
                 isFirstLine = false;
             }
-            line = new String(line.getBytes(READED_CHARSET), charset);
-            return decorater.decorate(line);
+            line = new String(line.getBytes(HAVE_READ_CHARSET), charset);
+            return getDecorator().decorate(line);
         } else
             return null;
     }

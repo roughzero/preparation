@@ -17,7 +17,7 @@ public class StepTaskProvider extends AbstractTaskProvider<Integer> {
     private int start;
     private int step;
     private int current;
-    private int proviedTasks = 0;
+    private int providedTasks = 0;
 
     public int getTasks() {
         return tasks;
@@ -59,9 +59,9 @@ public class StepTaskProvider extends AbstractTaskProvider<Integer> {
      * @param step 步进值
      */
     public StepTaskProvider(int tasks, int start, int step) {
-        this.tasks = tasks;
-        this.start = start;
-        this.step = step;
+        setTasks(tasks);
+        setStart(start);
+        setStep(step);
         this.current = start;
     }
 
@@ -70,10 +70,10 @@ public class StepTaskProvider extends AbstractTaskProvider<Integer> {
      */
     @Override
     protected Integer doGetNextTask() {
-        if (proviedTasks < tasks) {
+        if (providedTasks < tasks) {
             int result = current;
             current += step;
-            proviedTasks++;
+            providedTasks++;
             return result;
         }
 

@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractTaskProvider<E> implements MultiThreadTaskProvider<E> {
     protected static Log logger = LogFactory.getLog(AbstractTaskProvider.class);
 
-    private int proviedTasks = 0;
+    private int providedTasks = 0;
 
     /**
      * @see rough.preparation.batch.MultiThreadTaskProvider#nextTask()
@@ -23,7 +23,7 @@ public abstract class AbstractTaskProvider<E> implements MultiThreadTaskProvider
     public E nextTask() {
         E nextTask = doGetNextTask();
         if (nextTask != null)
-            proviedTasks++;
+            providedTasks++;
         return nextTask;
     }
 
@@ -31,7 +31,7 @@ public abstract class AbstractTaskProvider<E> implements MultiThreadTaskProvider
      * @see rough.preparation.batch.MultiThreadTaskProvider#providedTasks()
      */
     public int providedTasks() {
-        return proviedTasks;
+        return providedTasks;
     }
 
     /**

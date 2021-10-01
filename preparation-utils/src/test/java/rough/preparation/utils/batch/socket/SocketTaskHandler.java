@@ -15,7 +15,7 @@ import rough.preparation.batch.MultiThreadTaskHandler;
 public class SocketTaskHandler extends MultiThreadTaskHandler<SocketWrapper, Boolean> {
 
     @Override
-    protected Boolean doProcee(SocketWrapper task) {
+    protected Boolean doProcess(SocketWrapper task) {
         boolean result = false;
         if (task.getSocket() == null) {
             return false;

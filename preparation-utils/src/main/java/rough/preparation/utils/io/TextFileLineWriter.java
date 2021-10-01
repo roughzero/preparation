@@ -36,7 +36,6 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
      * Constructor.
      *
      * @param filename 文件名.
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineWriter(String filename) throws FileNotFoundException {
         this(filename, DEFAULT_CHARSET);
@@ -47,7 +46,6 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
      *
      * @param filename 文件名
      * @param charset  字符集
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineWriter(String filename, String charset) throws FileNotFoundException {
         this(filename != null ? new File(filename) : null, charset);
@@ -57,7 +55,6 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
      * Constructor.
      *
      * @param file 文件
-     * @throws FileNotFoundException FileNotFoundException
      */
     public TextFileLineWriter(File file) throws FileNotFoundException {
         this(file, DEFAULT_CHARSET);
@@ -68,7 +65,7 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
      *
      * @param file    文件
      * @param charset 字符集
-     * @throws FileNotFoundException If file does not exists.
+     * @throws FileNotFoundException If file do not exist.
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public TextFileLineWriter(File file, String charset) throws FileNotFoundException {
@@ -100,7 +97,7 @@ public class TextFileLineWriter extends AbstractLineWriter implements LineWriter
      * @throws IOException While catch IOException.
      */
     private void writeBom() throws IOException {
-        if (hasBom) {
+        if (isHasBom()) {
             if (this.charset.equalsIgnoreCase("UTF-8")) {
                 access.write(new byte[]{(byte) 239, (byte) 187, (byte) 191});
             }

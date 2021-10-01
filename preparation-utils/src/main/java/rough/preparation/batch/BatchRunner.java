@@ -43,5 +43,5 @@ public interface BatchRunner {
     /**
      * @return 最近一次启动后已完成的任务数.
      */
-    int getFininshed();
+    int getFinished();
 }

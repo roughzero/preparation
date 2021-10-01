@@ -24,7 +24,7 @@
         <commons-loggeing.version>1.1.1</commons-loggeing.version>
         <commons-dbcp.version>1.3</commons-dbcp.version>
         <commons-collections.version>3.2.1</commons-collections.version>
-        <commons-beanutils.version>1.8.3</commons-beanutils.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <poi.version>4.1.2</poi.version>
         <lombok.version>1.18.16</lombok.version>
 
@@ -53,6 +53,11 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>${commons-lang.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
