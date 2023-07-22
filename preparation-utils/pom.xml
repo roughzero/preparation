@@ -28,7 +28,7 @@
         <poi.version>4.1.2</poi.version>
         <lombok.version>1.18.16</lombok.version>
 
-        <hsqldb.version>1.8.0.10</hsqldb.version>
+        <hsqldb.version>2.7.1</hsqldb.version>
         <oracle.driver.version>11g1.6</oracle.driver.version>
     </properties>
 
